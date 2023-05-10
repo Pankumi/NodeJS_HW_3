@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 
 const app = require("./app");
 
-const DB_HOST = "mongodb+srv://NodeJsLogin:KeMMzECD1uNqAvC6@nodejscluster.e4sl6l7.mongodb.net/contacts_db?retryWrites=true&w=majority"; // <password> замінюємо на пароль, я між /? вставляєм назву БД
+const {DB_HOST} = require("./config");
 
 mongoose.set('strictQuery', true); // За замовчуванням false - будь-які запити до бази даних, які включають поля, не описані в моделі Mongoose, будуть проігноровані без повідомлення про помилку. true - будуть відхилятись з помилкою, що може допомогти забезпечити правильність виконання запитів до бази даних та уникнути помилок через неправильну структуру запиту.
 
