@@ -1,7 +1,7 @@
 const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
-require("dotenv").config(); // імпортуємо dotenv і одразу запускаємо його метод config() (додає змінні оточення з файлу .env в систему)
+require("dotenv").config(); // імпортуємо dotenv і одразу запускаємо його метод config() який читає .env і додає змінні оточення в систему
 
 const contactsRouter = require("./routes/api/contacts");
 
