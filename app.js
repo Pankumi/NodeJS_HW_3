@@ -1,13 +1,13 @@
 const express = require("express");
-const logger = require("morgan");
-const cors = require("cors");
+const logger = require("morgan"); // журналізатор, що використовується для реєстрації подій, повідомлень та інших важливих даних під час виконання програми
+const cors = require("cors"); // допомагає управляти політикою same-origin у браузері і дозволяє перетинати доменні обмеження, які існують при здійсненні запитів між різними доменами.
 require("dotenv").config(); // імпортуємо dotenv і одразу запускаємо його метод config() який читає .env і додає змінні оточення в систему
 
 const contactsRouter = require("./routes/api/contacts");
 
 const app = express();
 
-const formatsLogger = app.get("env") === "development" ? "dev" : "short";
+const formatsLogger = app.get("env") === "development" ? "dev" : "short"; // при запуску додатка через "start:dev" команда в скрипті запуску в "package.json" записує "development" в змінну "env", тож тепер перевіряєм це, якщо правда то зберігаєм "dev" і нищє використовуємо для логування
 
 app.use(logger(formatsLogger));
 app.use(cors());

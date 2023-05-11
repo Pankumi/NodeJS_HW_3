@@ -1,6 +1,5 @@
 
-const mongoose = require("mongoose");
-
+const mongoose = require("mongoose"); // бібліотека для роботи з MongoDB, надає простий спосіб моделювання даних, валідації, створення запитів і зв'язку з MongoDB.
 const app = require("./app");
 
 // в app.js в змінні оточення додається DB_HOST
@@ -18,3 +17,4 @@ mongoose.connect(DB_HOST)
   console.log(error);
   process.exit(1); // process.exit() - закриває запущєні процеси 1 - закрити з невідомою помилкою.
 })
+
