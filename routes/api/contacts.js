@@ -13,7 +13,7 @@ router.get("/", getAll);
 
 // router.get("/:id", getById);
 
-// router.post("/", add);
+router.post("/", add);
 
 // router.put("/:id", updateById); // put - запит змінює об'єкт (шляхом повного перезапису масиву)
 

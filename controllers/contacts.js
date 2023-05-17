@@ -3,7 +3,9 @@ const { HttpError, ctrlWrapper } = require("../helpers/index");
 const { addSchema, changeSchema } = require("../schemas/index");
 
 const getAll = async (req, res) => {
-  res.status(200).json(await Contact.find());
+  const result = await Contact.find()
+  // console.log("result >>", result);
+  res.status(200).json(result);
 };
 
 // // 1-знаходжу об'єкт з зазначеним id, 2-повертаю
@@ -17,18 +19,22 @@ const getAll = async (req, res) => {
 //   res.json(result);
 // };
 
-// // 1-перевіряю поля на валідність, 2-додаю нов. об'єкт до масиву, 3-повертаю нов. об'ект
-// const add = async (req, res) => {
-//   // 1
-//   const { error } = addSchema.validate(req.body);
-//   if (error) {
-//     throw HttpError(400, "missing required name field");
-//   }
-//   // 2
-//   const result = await addContact(req.body);
-//   // 3
-//   res.status(201).json(result); 
-// };
+// 2-додаю нов. об'єкт до масиву, створюю помилку якщо Contact.create() повертає помилку при валідації полів 3-повертаю нов. об'ект
+const add = async (req, res) => {
+  // 1
+  // const { error } = addSchema.validate(req.body);
+  // if (error) {
+  //   throw HttpError(400, "missing required field");
+  // }
+  // 2
+  try {
+    await Contact.create(req.body);
+  } catch (error) {
+    throw HttpError(400, error);
+  }
+  // 3
+  res.status(201).json(req.body); 
+};
 
 // // 1-перевіряю поля на валідність, 2-змінюю данні, 3-повертаю оновлений контакт
 // const updateById = async (req, res) => {
@@ -61,7 +67,7 @@ const getAll = async (req, res) => {
 module.exports = {
   getAll: ctrlWrapper(getAll),
   // getById: ctrlWrapper(getById),
-  // add: ctrlWrapper(add),
+  add: ctrlWrapper(add),
   // updateById: ctrlWrapper(updateById),
   // deletedById: ctrlWrapper(deletedById),
 };
