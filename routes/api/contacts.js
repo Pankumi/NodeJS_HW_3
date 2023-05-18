@@ -1,22 +1,16 @@
 const express = require("express");
-const {
-  getAll,
-  getById,
-  add,
-  updateById,
-  deletedById,
-} = require("../../controllers/contacts");
+const ctrl = require("../../controllers/contacts");
 
 const router = express.Router();
 
-router.get("/", getAll);
+router.get("/", ctrl.getAll);
 
-// router.get("/:id", getById);
+// router.get("/:id", ctrl.getById);
 
-router.post("/", add);
+router.post("/", ctrl.add);
 
-// router.put("/:id", updateById); // put - запит змінює об'єкт (шляхом повного перезапису масиву)
+// router.put("/:id", ctrl.updateById); // put - запит змінює об'єкт (шляхом повного перезапису масиву)
 
-// router.delete("/:id", deletedById);
+// router.delete("/:id", ctrl.deletedById);
 
 module.exports = router;

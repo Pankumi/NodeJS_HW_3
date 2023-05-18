@@ -1,6 +1,6 @@
-const Contact = require("../models/contact");
+const {Contact, shemas} = require("../models/contact");
 const { HttpError, ctrlWrapper } = require("../helpers/index");
-const { addSchema, changeSchema } = require("../schemas/index");
+const { changeSchema } = require("../schemas/index");
 
 const getAll = async (req, res) => {
   const result = await Contact.find()
@@ -19,21 +19,17 @@ const getAll = async (req, res) => {
 //   res.json(result);
 // };
 
-// 2-додаю нов. об'єкт до масиву, створюю помилку якщо Contact.create() повертає помилку при валідації полів 3-повертаю нов. об'ект
+// 2-додаю нов. об'єкт до масиву, 3-повертаю нов. об'ект
 const add = async (req, res) => {
   // 1
-  // const { error } = addSchema.validate(req.body);
-  // if (error) {
-  //   throw HttpError(400, "missing required field");
-  // }
-  // 2
-  try {
-    await Contact.create(req.body);
-  } catch (error) {
-    throw HttpError(400, error);
+  const { error } = shemas.addSchema.validate(req.body);
+  if (error) {
+    throw HttpError(400, "missing required field");
   }
+  // 2
+  await Contact.create(req.body);
   // 3
-  res.status(201).json(req.body); 
+  res.status(201).json(req.body);  
 };
 
 // // 1-перевіряю поля на валідність, 2-змінюю данні, 3-повертаю оновлений контакт
