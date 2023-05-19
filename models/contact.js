@@ -3,19 +3,8 @@ const Joi = require("joi"); // перевіряє тіло POST запиту н�
 
 const {handleMongooseError} = require("../helpers/index");
 
-const nameList = ["m1", "m2", "m3",];
-// -----------
-
-// шаблон полів в body запиту.
-const addSchema = Joi.object({
-  name: Joi.string().valid(...nameList).required(),
-  email: Joi.string().required(),
-  phone: Joi.string().required(),
-}); // string() - тип, required() - обов'язкове
-
-const shemas = {
-  addSchema
-}
+const nameList = ["m1", "m2", "m3"];
+const dateRegexp = /^\d{2}-\d{3}-\d{3}-\d{4}$/;
 // -----------
 
 // Створення схеми
@@ -33,7 +22,7 @@ const contactSchema = new mongoose.Schema({
   phone: {
     type: String,
     required: true,
-    match: /^\d{2}-\d{3}-\d{3}-\d{4}$/, // перевірка за регулярним виразом
+    match: dateRegexp, // перевірка за регулярним виразом
   },
 }, // перший аргумент у схемі описує об'єкт
 {
@@ -42,6 +31,7 @@ const contactSchema = new mongoose.Schema({
 } // другий аргумент - список налаштувань
 );
 
+// Мідлвара для c[tvb!]
 contactSchema.post("save", handleMongooseError); // коли при спробі збереження станеться помилка спрацює ця мідлвара
 
 // Створення моделі на основі схеми // метод mongoose.model створює клас "Contact" який прив'язується до цієї колекції і всередині якого валідація відбувається за цією схемою
@@ -49,7 +39,20 @@ const Contact = mongoose.model('contacts_collectoin', contactSchema); // Contact
 
 // -----------
 
+// шаблон полів в body запиту.
+const addSchema = Joi.object({
+  name: Joi.string().valid(...nameList).required(),
+  email: Joi.string().required(),
+  phone: Joi.string().pattern(dateRegexp).required(),
+}); // string() - тип, required() - обов'язкове
+
+const schemas = {
+  addSchema
+}
+
+// -----------
+
 module.exports = {
   Contact,
-  shemas,
+  schemas,
 }

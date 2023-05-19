@@ -14,7 +14,7 @@ mongoose.connect(DB_HOST)
   });
 } )
 .catch( error => {
-  console.log(error);
+  console.error("MongoDB connection error:", error);
   process.exit(1); // process.exit() - закриває запущєні процеси 1 - закрити з невідомою помилкою.
 })
 
