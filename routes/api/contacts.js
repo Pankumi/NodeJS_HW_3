@@ -1,8 +1,8 @@
 const express = require("express");
 
 const ctrl = require("../../controllers/contacts");
-const {validateBody, isValidId} = require("../../middlewares")
-const {schemas} = require("../../models/contact");
+const { validateBody, isValidId } = require("../../middlewares");
+const { schemas } = require("../../models/contact");
 
 const router = express.Router();
 
@@ -17,7 +17,9 @@ router.post("/", validateBody(schemas.addSchema), ctrl.add);
 
 router.put("/:id", isValidId, validateBody(schemas.addSchema), ctrl.updateById); // put - запит змінює об'єкт (шляхом повного перезапису масиву)
 
-// router.delete("/:id", isValidId, ctrl.deletedById);
+router.patch("/:id/name", isValidId, validateBody(schemas.updateNameSchema), ctrl.updateName); // patch - змінюєм конкретне поле/я
+
+router.delete("/:id", isValidId, ctrl.deletedById);
 
 // -----------
 
